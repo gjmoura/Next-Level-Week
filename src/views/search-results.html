@@ -1,65 +1,61 @@
-<!DOCTYPE html>
-<html lang="pt_br">
+{% extends "layout.html"%}
 
+{% set pageId = "page-search-results" %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ecoleta</title>
+
+{% block title %}
     <title>Resultado da pesquisa</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&family=Ubuntu:wght@700&display=swap" rel="stylesheet">
+{% endblock title %}
 
-    <link href="/styles/main.css" rel="stylesheet">
+{% block styles %}
+
     <link href="/styles/search-results.css" rel="stylesheet">
 
-    <link href="/styles/responsive.css" rel="stylesheet">
+{% endblock styles %}
 
-</head>
-<body>
+{% block content %}
 
-    <div id="page-search-results">
-    
-        <header>
-            <img src="/assets/logo.svg" alt="logo">
+    {% include "partials/page-header.html" %}
 
-            <a href="/index.html">
-                <span>
+    <main>
 
-                </span>
-                Voltar para home</a>
-        </header>
+        {% if total > 0  %}
 
-        <main>
+        
+
             <h4>
-                <strong>2 pontos</strong> encontrados
+                <strong>{{total}} pontos</strong>
+                encontrados
             </h4>
 
             <div class="cards">
-                <div class="card">
-                    <img src="https://images.unsplash.com/photo-1528323273322-d81458248d40?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1101&q=80" alt="Colectoria">
-                    <h1>Colectoria</h1>
-                    <h3>Resíduos Eletrônicos, Lâmpadas</h3>
-                    <p>
-                        Rio do sul, Santa Catarina <br/>
-                        Guilherme Germballa, Jardim América <br/>
-                        Nº260
-                    </p>
-                </div>
 
-                <div class="card">
-                    <img src="https://images.unsplash.com/photo-1567393528677-d6adae7d4a0a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80" alt="Coletoria">
-                    <h1>Papersider</h1>
-                    <h3>Papéis e Papelão</h3>
-                    <p>
-                        Rio do sul, Santa Catarina <br/>
-                        Guilherme Germballa, Jardim América <br/>
-                        Nº260
-                    </p>
-                </div>
+                {% for place in places %}
+
+                    <div class="card">
+                        <img src="{{ place.image }}" alt="{{ place.name}}">
+                        <h1>{{ place.name }}</h1>
+                        <h3>{{ place.items }}</h3>
+                        <p>
+                            {{ place.city }}, {{ place.state }}
+                            <br/>
+                            {{ place.adress }}
+                            <br/>
+                            {{ place.adress2 }}
+                        </p>
+                    </div>
+                {% endfor %}
+                
             </div>
-        </main>
 
-    </div>   
-    
-</body>
-</html>
+        {%else%}
+
+        <h4><strong>Nenhum</strong> item encontrado</h4>
+
+        {% endif %}
+
+    </main>
+
+{% endblock content %}
